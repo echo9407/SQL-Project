@@ -1,5 +1,6 @@
 # Ted Talk Data Analysis Project
 
+---
 ### 1. Introduction & Project Overview:
 We are a small consulting team working with a well-known research university to better understand how they can improve their marketing effectiveness by using digital channels and posting educational videos on the web. The client ultimately wants to help its professors and researchers land speaking gigs at prestigious conferences and gain status in higher academic circles. The client wants to use the TED Talk dataset to better understand how different qualities of videos (e.g. length, title, descriptions, topics) affect their views and ratings numbers. The client can apply these insights to improve the qualities of their own videos in hopes of gaining more views and getting better ratings.
 
@@ -11,6 +12,7 @@ The first step for our team will be to better understand the data at hand by per
 
 The insights derived from this project will enable the client identify key features that will influence audience engagement with the content they put out. They will be able to put out more targeted content that will increase professors recognition in the academic and related industries as well as the university’s public image. This will in turn create additional revenue for both parties as professors would potentially be invited to other paid global conferences and speaking engagements, and the university would have created a more prestigious image for the caliber of education provided which could increase student enrollment.
 
+---
 ### 2. Data Overview & Sample:
 
 **Dataset:**
@@ -65,14 +67,14 @@ Extent:
 
 ● Transcripts joins with main dataset on URL (18 distinct features in total)
 
-
+---
 ### 3. Normalization Plan:
 
 The main goal in our normalization plan was to break up the tables in the original data set into a 3NF database, as reflected in our ER diagram. We combined the transcript data set to our original one and with our data in 3NF, we ended up with 15 tables. To achieve 1NF, we first ensured there were no repeating rows in the original dataset so that every record was unique and each cell only contained one value. Since all videos in the dataset were unique there were no repeating rows so we created a videos table and assigned each video a unique identifier. The ratings and related_talks tables contained nested json objects that we had to extract which resulted in duplicate rows as we had to ensure there was only one value in each cell for each record. We removed all duplicates, assigned unique identifiers, and created a table that held only unique records to increase database performance and avoid wasting space. The tags and speaker_occupation columns contained lists that we also had to extract, assign unique identifiers to, and remove duplicates from to make the data look cleaner and ensure easier querying.
 
 To get the data in 2NF we made sure all tables had a unique identifier that every other attribute in that table was fully dependent on, and also made sure that for all tables with composite keys, all other attributes in that table were fully dependent on the entire composite key and not just part of it. We transformed tables such as main_speakers to include information that was more relevant to our business case and that would make writing queries easier such as assigned them an id and including personal information like occupations. We merged comments, views, and duration to create a more insightful table called video_stats that contained information about each video’s performance and audience engagement. We clearly identified foreign keys and made sure they related back to the right tables to avoid any errors. Once all this was put in place, we had also achieved 3NF.
 
-
+---
 ### 4. ETL Description:
 
 Once we merged the transcripts and main datasets together to create a main data frame, and ensured there were no duplicates, we cleaned up the data a little using Python. We changed date formats from Unix timestamps to DD-MM-YY format, checked for null values and made all of them blank instead.
@@ -86,7 +88,7 @@ To create the video_tags table, all individual tags had to be extracted from the
 The nested jsons in related_talks were extracted and transformed into a data frame and all duplicates were dropped. We followed the same process for ratings where each rating was extracted from the json object and all duplicates were dropped so the table only contained unique ratings and their assigned ids. Video_ratings was then created matching video ids to their various rating ids. The tables and data were then pushed into the database using the sample code below.
 
 
-
+---
 ### 5. Analytical Procedures:
 
 Since our client is interested in understanding the aspects of our project that relate to video views, we have taken preliminary steps to conduct an exploratory data analysis for features that may be related to the outcome variable. To simulate how a real database user would conduct an analysis, we are using a combination of Postgres and Python, including the SQL Alchemy, Pandas, Matplotlib, and Seaborn packages. Data is queried from the database using SQL Alchemy, stored in a Pandas dataframe, and visualized with Matplotlib and/or Seaborn. Specific parts of the EDA are detailed below:
@@ -166,14 +168,15 @@ Our threshold increase was successful, as the number of columns (words) was redu
 
 With our data vectorized for each transcript, predictive models may now be run on this data. Other types of vectorization, such as TF-IDF, should also be explored in the future to see how the results compare against each other.
 
-
+---
 ### 6. Planning for Redundancy and Performance:
 
 Data redundancy occurs when data appears multiple times in a database, which is a common issue in data storage and database systems. It may increase the size of the database unnecessarily, cause data inconsistency, and data corruption. To prevent data redundancy, we use data normalizations that includes creating tables and establishing relationships between those tables according to rules designed both to protect the data and to make the database more flexible. To optimize database performance, we cleaned data duplicates and removed unnecessary symbols, making data analysis more efficient and effective. In addition, we formed different table segmentations to provide insights on how our client should present the videos online.
 
+---
 ### 7. BI Dashboards in Metabase are in the master branch
 
-
+---
 ### 8. Conclusion:
 
 The steps that our team has detailed in this report show the effectiveness of the approaches taken and the dedication we have towards our client’s success. Using a PostgreSQL database and a Python ETL script, our team was able to develop a 3NF database out of two messy CSV files from Kaggle. From here, we performed a wide range of analytical procedures on the data to understand which parts of the data may impact view counts. We even took our analysis a step further by employing advanced analytics techniques like count vectorization to prepare the data for predictive modeling. These advancements directly relate to the goals of the client and would set our team up for success based on the current project scope.
