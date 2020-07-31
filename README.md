@@ -133,3 +133,51 @@ Let’s continue to explore the data and check out the tags on each video.
 
 One of the features captured in our database is tags, which has 594 distinct values. We can combine the video stats and tags data to generate summary statistics about each tag and see which has the highest average view counts.
 
+Interestingly, body language had an exceptionally high average view count at ~1.4 million. The next highest topic, Google, was significantly lower at ~800k. It is worthwhile to note that body language is a rather unique tag, so a few outlier videos may be pulling this number up significantly compared to other tags.
+
+**Procedure 8: Which tags had the highest maximum number of views?**
+
+We can take a similar approach as we did on the above visual to examine which tags were included on the videos with the most views in our database.
+
+This visual is less informative than the summary by average, since all it tells us is that the most viewed video had the seven tags on the left included on it. Nonetheless, it tells us that certain unique topics, like children and dance, may have the potential to generate lots of interest in the online learning community.
+
+**Procedure 9: Clean transcripts text data**
+
+One of the most important features in our database is the transcripts table, which tells us exactly what was said during each TED Talk. We can pull this info in with videos and video stats to make a new data frame in Python.
+
+Now that the important information is all in one place, we need to clean the transcript data. Every NLP project is at least slightly different, so our team decided to take a few major steps to clean the data in a way that is usually successful in other similar projects. The steps to clean the text data included:
+
+
+- Removing stop words using NLTK 
+
+- Lemmatizing words using NLTK’s Wordnet Lemmatizer 
+
+- Making all letters lower-case 
+
+- Splitting words into a list
+
+Once ready, this function was applied to the transcripts column to make a new column – clean transcripts.
+
+**Procedure 10: Vectorizing transcripts using Scikit Learn**
+
+Another task that would be highly relevant to our project goal would be vectorizing the words in the transcript. Vectorization is a process that converts text data into sparse matrices by recording where certain words exist in each observation. In our case, we used a Count Vectorizer from the sklearn package to vectorize the transcripts in our text data object. The initial parameters specified that transcripts would be cleaned with our clean_text function and that words would only be included if they showed up in at least 3 videos. Since we probably don’t want to include all 26000+ columns in a predictive model, we increased the threshold to 10 and examined how much that reduced the size of the matrix.
+
+Our threshold increase was successful, as the number of columns (words) was reduced to 11763. Now that we have a more manageable count vectorized document term matrix, we can convert it to a Pandas dataframe for further analysis.
+
+With our data vectorized for each transcript, predictive models may now be run on this data. Other types of vectorization, such as TF-IDF, should also be explored in the future to see how the results compare against each other.
+
+
+### 6. Planning for Redundancy and Performance:
+
+Data redundancy occurs when data appears multiple times in a database, which is a common issue in data storage and database systems. It may increase the size of the database unnecessarily, cause data inconsistency, and data corruption. To prevent data redundancy, we use data normalizations that includes creating tables and establishing relationships between those tables according to rules designed both to protect the data and to make the database more flexible. To optimize database performance, we cleaned data duplicates and removed unnecessary symbols, making data analysis more efficient and effective. In addition, we formed different table segmentations to provide insights on how our client should present the videos online.
+
+### 7. BI Dashboards in Metabase are in the master branch
+
+
+### 8. Conclusion:
+
+The steps that our team has detailed in this report show the effectiveness of the approaches taken and the dedication we have towards our client’s success. Using a PostgreSQL database and a Python ETL script, our team was able to develop a 3NF database out of two messy CSV files from Kaggle. From here, we performed a wide range of analytical procedures on the data to understand which parts of the data may impact view counts. We even took our analysis a step further by employing advanced analytics techniques like count vectorization to prepare the data for predictive modeling. These advancements directly relate to the goals of the client and would set our team up for success based on the current project scope.
+
+As an additional step towards user-friendliness, our team also took the time to connect this data to Metabase and create dashboards for key stakeholders. For executives, dashboards with visuals about key metrics allow them to focus on the information that matters most for the decisions they will make on a regular or semi-regular basis. For analysts, the easy querying capabilities allow for easy access to any TED Talk data that might be required for an analysis. This setup will allow the client to be self-sufficient even after our engagement has ended and their internal clients are the only ones still interacting with the system.
+
+Through our new database, it is possible to examine and investigate a multitude of variables to gain an understanding of the factors that relate to video view counts. With this information at hand, we should be able to complete the objective set out by our clients. We can deem that the project has been a success thus far, but next steps must also be taken to ensure that all aspects of the project are properly addressed. These may include predictive modeling on existing features, additional feature engineering and data manipulation, or some other step that would allow us to better comprehend the drivers of online learning video views.
